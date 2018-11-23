@@ -5,7 +5,8 @@
   ],
   "rules": {
     "no-console": 0,
-    "indent": ["error", 2]
+    "indent": ["error", 2],
+    "complexity": ["error", { "max": 5 }]
   },
   "settings": {
     "react": {

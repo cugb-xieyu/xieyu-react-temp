@@ -22,6 +22,7 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -61,58 +62,7 @@ const lessRegex = /\.less$/;
 const lessModuleRegex = /\.module\.less$/;
 
 // // common function to get style loaders
-// const getStyleLoaders = (cssOptions, preProcessor) => {
-//   const loaders = [
-//     {
-//       loader: MiniCssExtractPlugin.loader,
-//       options: Object.assign(
-//         {},
-//         shouldUseRelativeAssetPaths ? { publicPath: '../../' } : undefined
-//       ),
-//     },
-//     {
-//       loader: require.resolve('css-loader'),
-//       options: cssOptions,
-//     },
-//     {
-//       // Options for PostCSS as we reference these options twice
-//       // Adds vendor prefixing based on your specified browser support in
-//       // package.json
-//       loader: require.resolve('postcss-loader'),
-//       options: {
-//         // Necessary for external CSS imports to work
-//         // https://github.com/facebook/create-react-app/issues/2677
-//         ident: 'postcss',
-//         plugins: () => [
-//           require('postcss-flexbugs-fixes'),
-//           require('postcss-preset-env')({
-//             autoprefixer: {
-//               flexbox: 'no-2009',
-//             },
-//             stage: 3,
-//           }),
-//         ],
-//         sourceMap: shouldUseSourceMap,
-//       },
-//     },
-//   ];
-//   if (preProcessor) {
-//     loaders.push({
-//       loader: require.resolve(preProcessor),
-//       options: {
-//         sourceMap: shouldUseSourceMap,
-//       },
-//     });
-//   }
-//   return loaders;
-// };
-
-
-//this method has been modified since we made a custom theme on antd,
-//if we weren't useing a custom theme, 
-//we would unleash the method above and comment the one below
-// common function to get style loaders
-const getStyleLoaders = (cssOptions, preProcessor, antdOpts) => {
+const getStyleLoaders = (cssOptions, preProcessor) => {
   const loaders = [
     {
       loader: MiniCssExtractPlugin.loader,
@@ -147,16 +97,7 @@ const getStyleLoaders = (cssOptions, preProcessor, antdOpts) => {
       },
     },
   ];
-  if (preProcessor && antdOpts) {
-    loaders.push({
-      loader: require.resolve(preProcessor),
-      options: {
-        sourceMap: shouldUseSourceMap,
-        ...antdOpts
-      },
-    });
-  }
-  else if (preProcessor && !antdOpts) {
+  if (preProcessor) {
     loaders.push({
       loader: require.resolve(preProcessor),
       options: {
@@ -166,6 +107,66 @@ const getStyleLoaders = (cssOptions, preProcessor, antdOpts) => {
   }
   return loaders;
 };
+
+
+//this method has been modified since we made a custom theme on antd,
+//if we weren't useing a custom theme, 
+//we would unleash the method above and comment the one below
+// common function to get style loaders
+// const getStyleLoaders = (cssOptions, preProcessor, antdOpts) => {
+//   const loaders = [
+//     {
+//       loader: MiniCssExtractPlugin.loader,
+//       options: Object.assign(
+//         {},
+//         shouldUseRelativeAssetPaths ? { publicPath: '../../' } : undefined
+//       ),
+//     },
+//     {
+//       loader: require.resolve('css-loader'),
+//       options: cssOptions,
+//     },
+//     {
+//       // Options for PostCSS as we reference these options twice
+//       // Adds vendor prefixing based on your specified browser support in
+//       // package.json
+//       loader: require.resolve('postcss-loader'),
+//       options: {
+//         // Necessary for external CSS imports to work
+//         // https://github.com/facebook/create-react-app/issues/2677
+//         ident: 'postcss',
+//         plugins: () => [
+//           require('postcss-flexbugs-fixes'),
+//           require('postcss-preset-env')({
+//             autoprefixer: {
+//               flexbox: 'no-2009',
+//             },
+//             stage: 3,
+//           }),
+//         ],
+//         sourceMap: shouldUseSourceMap,
+//       },
+//     },
+//   ];
+//   if (preProcessor && antdOpts) {
+//     loaders.push({
+//       loader: require.resolve(preProcessor),
+//       options: {
+//         sourceMap: shouldUseSourceMap,
+//         ...antdOpts
+//       },
+//     });
+//   }
+//   else if (preProcessor && !antdOpts) {
+//     loaders.push({
+//       loader: require.resolve(preProcessor),
+//       options: {
+//         sourceMap: shouldUseSourceMap,
+//       },
+//     });
+//   }
+//   return loaders;
+// };
 
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
@@ -379,12 +380,12 @@ module.exports = {
                   { 
                     "libraryName": "antd",
                     "libraryDirectory": "es", 
-                    //style: 'css',
+                    style: 'css',
 
                     //this config option has been modified since we made a custom theme on antd,
                     //if we weren't useing a custom theme, 
                     //we would unleash the config option above and comment the one below
-                    style: true
+                    // style: true
                   },
                 ]
               ],
@@ -458,25 +459,27 @@ module.exports = {
           {
             test: lessRegex,
             exclude: lessModuleRegex,
-            // loader: getStyleLoaders(
-            //   {
-            //     importLoaders: 2,
-            //     sourceMap: shouldUseSourceMap,
-            //   },
-            //   'less-loader'
-            // ),
-                    
-            //this config option has been modified since we made a custom theme on antd,
-            //if we weren't useing a custom theme, 
-            //we would unleash the config option above and comment the one below
+
             loader: getStyleLoaders(
               {
                 importLoaders: 2,
                 sourceMap: shouldUseSourceMap,
               },
-              'less-loader',
-              { modifyVars: { 'primary-color': '#108ee9', 'link-color': '#108ee9' }, javascriptEnabled: true }
+              'less-loader'
             ),
+                    
+            //this config option has been modified since we made a custom theme on antd,
+            //if we weren't useing a custom theme, 
+            //we would unleash the config option above and comment the one below
+            // loader: getStyleLoaders(
+            //   {
+            //     importLoaders: 2,
+            //     sourceMap: shouldUseSourceMap,
+            //   },
+            //   'less-loader',
+            //   { modifyVars: { 'primary-color': '#108ee9', 'link-color': '#108ee9' }, javascriptEnabled: true }
+            // ),
+
             // Don't consider CSS imports dead code even if the
             // containing package claims to have no side effects.
             // Remove this when webpack adds a warning or an error for this.
@@ -487,19 +490,7 @@ module.exports = {
           // using the extension .module.scss or .module.sass
           {
             test: lessModuleRegex,
-            // loader: getStyleLoaders(
-            //   {
-            //     importLoaders: 2,
-            //     sourceMap: shouldUseSourceMap,
-            //     modules: true,
-            //     getLocalIdent: getCSSModuleLocalIdent,
-            //   },
-            //   'less-loader'
-            // ),
-                    
-            //this config option has been modified since we made a custom theme on antd,
-            //if we weren't useing a custom theme, 
-            //we would unleash the config option above and comment the one below
+            
             loader: getStyleLoaders(
               {
                 importLoaders: 2,
@@ -507,9 +498,22 @@ module.exports = {
                 modules: true,
                 getLocalIdent: getCSSModuleLocalIdent,
               },
-              'less-loader',
-              { modifyVars: { 'primary-color': '#108ee9', 'link-color': '#108ee9' }, javascriptEnabled: true }
+              'less-loader'
             ),
+                    
+            //this config option has been modified since we made a custom theme on antd,
+            //if we weren't useing a custom theme, 
+            //we would unleash the config option above and comment the one below
+            // loader: getStyleLoaders(
+            //   {
+            //     importLoaders: 2,
+            //     sourceMap: shouldUseSourceMap,
+            //     modules: true,
+            //     getLocalIdent: getCSSModuleLocalIdent,
+            //   },
+            //   'less-loader',
+            //   { modifyVars: { 'primary-color': '#108ee9', 'link-color': '#108ee9' }, javascriptEnabled: true }
+            // ),
           },
           // "file" loader makes sure assets end up in the `build` folder.
           // When you `import` an asset, you get its filename.
@@ -631,6 +635,15 @@ module.exports = {
         silent: true,
         formatter: typescriptFormatter,
       }),
+
+    //stylelint plugin
+    new StyleLintPlugin({
+      context: paths.appSrc,
+      files: '**/*.less',
+      quiet: true,
+      fix: true,
+      syntax: 'less'
+    })
   ].filter(Boolean),
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

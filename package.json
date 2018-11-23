@@ -135,6 +135,9 @@
     "express": "^4.16.4",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
-    "mockjs": "^1.0.1-beta3"
+    "mockjs": "^1.0.1-beta3",
+    "stylelint": "^9.8.0",
+    "stylelint-config-standard": "^18.2.0",
+    "stylelint-webpack-plugin": "^0.10.5"
   }
 }
