@@ -1,0 +1,64 @@
+.button-main {
+  width: 108px;
+  height: 36px;
+  border: none;
+  border-radius: 18px;
+  background: #999;
+  &.active,
+  &[active] {
+    background: #108ee9;
+  }
+  
+  &:hover {
+    box-shadow: none;
+    background: #126fb1;
+  }
+
+  &.disabled, 
+  &[disabled],
+  &.disabled:hover,
+  &[disabled]:hover,
+  &.disabled:focus,
+  &.disabled:active,
+  &[disabled]:active,
+  &.disabled.active,
+  &[disabled].active {
+    box-shadow: none;
+    color: #fff;
+    background: #ccc;
+  }
+}
+
+.button-minor {
+  width: 108px;
+  height: 36px;
+  border: none;
+  border-radius: 18px;
+  border: 1px solid #999;
+  color: #999;
+  background: #fff;
+  &.active,
+  &[active] {
+    color: #108ee9;
+    border-color: #108ee9;
+  }
+  &:hover {
+    box-shadow: none;
+    color: #108ee9;
+    background: #e4edf3;
+    border-color: #108ee9;
+  }
+  &.disabled, 
+  &[disabled],
+  &.disabled:hover,
+  &[disabled]:hover,
+  &.disabled:focus,
+  &.disabled:active,
+  &[disabled]:active,
+  &.disabled.active,
+  &[disabled].active {
+    box-shadow: none;
+    color: #cecece;
+    border-color: #ccc;
+  }
+}

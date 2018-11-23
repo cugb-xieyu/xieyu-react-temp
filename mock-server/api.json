@@ -1,0 +1,68 @@
+{
+  "Login": [
+    {
+      "url": "/login",
+      "desc": "用户登入",
+      "mock": true,
+      "res": {
+        "status": "1",
+        "message": "xxxx",
+        "content": {
+          "loginName":"@cword(4,10)",
+          "uname|1": [
+            "系统管理员",
+            "用户"
+          ],
+          "uid|+2": 1,
+          "sessionId": "vlfyjfkhglhglihuigylvbhjbjgvhj",
+          "groupId": 500010,
+          "groupName": "@cword(4,10)",
+          "utype": 2
+        }
+      }
+    }
+  ],
+  "task":[
+    {
+      "url": "/project/info/toMain",
+      "desc": "项目列表",
+      "mock": true,
+      "res": {
+        "status": "1",
+        "message": "成功",
+        "content": {
+          "data": {
+            "page": {
+              "pageNo": 1,
+              "pageSize": 10,
+              "totalCount": 54,
+              "totalPage": 6,
+              "oStartPoint": 1,
+              "oEndPoint": 10,
+              "mStartPoint": 0,
+              "mEndPoint": 10,
+              "entities|10": [{
+                "descrip": "流程管理系统sit测试",
+                "periodCom": 1,
+                "remark": "Test",
+                "type": 1,
+                "stage": 1,
+                "createTime": 1534495685000,
+                "createId": 1,
+                "name": "流程管理系统sit测试",
+                "id|+1": 293,
+                "taskDepth": 1,
+                "projectName": "@cword(7)",
+                "projectId": 1,
+                "createName": "超级管理员",
+                "taskNum": "D0011808170448",
+                "timeStatus": 2,
+                "status": 1
+              }]
+            }
+          }
+        }
+      }
+    }
+  ]
+}
