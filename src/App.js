@@ -3,9 +3,7 @@
 import '@/App.less';
 
 import React, { Component } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom'
-
-import LayoutOne from '@/layouts/LayoutOne'
+import MainView from '@/views/MainView'
 
 class App extends Component {
   constructor(props) {
@@ -14,10 +12,7 @@ class App extends Component {
   }
   render() {
     return (
-      <Switch>
-        <Redirect exact from="/" to="/project-list"></Redirect>
-        <Route path="/(order-list|project-list)/" component={LayoutOne}></Route>
-      </Switch>
+      <MainView></MainView>
     );
   }
 }
